@@ -14,12 +14,15 @@ public class EntryPoint
 
 	public static void main(String[] args) throws IOException
 	{
-		// TzyUtils.configLog4jByFile("log4j.properties");
 		TzyUtils.configLog4jSimple();
 
 		Properties prop = TzyUtils
 		        .loadPropertiesFile("D:\\workspace\\CheckPrj\\test.properties");
-		System.out.println(prop.toString());
+		System.out.println(prop.get("tt"));
+		
+		TzyUtils.WriteProperties("D:\\workspace\\CheckPrj\\test.properties", "zz", "llll");
+		TzyUtils.WriteProperties("D:\\workspace\\CheckPrj\\test.properties",
+		        "love", "tangtang");
 
 	}
 

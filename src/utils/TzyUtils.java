@@ -5,8 +5,10 @@ import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Properties;
 
 import org.apache.commons.exec.CommandLine;
@@ -89,10 +91,12 @@ public class TzyUtils
 		try
 		{
 			exitValue = executor.execute(commandLine);
-		} catch (ExecuteException e)
+		}
+		catch (ExecuteException e)
 		{
 			e.printStackTrace();
-		} catch (IOException e)
+		}
+		catch (IOException e)
 		{
 			e.printStackTrace();
 		}
@@ -104,23 +108,41 @@ public class TzyUtils
 	public static Properties loadPropertiesFile(String path)
 	{
 		Properties properties = new Properties();
-		System.out.println(Object.class.getName());
 		InputStream inputStream;
 		try
 		{
 			inputStream = new BufferedInputStream(new FileInputStream(path));
 			properties.load(inputStream);
-		} catch (FileNotFoundException e1)
+		}
+		catch (FileNotFoundException e1)
 		{
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		} catch (IOException e)
+		}
+		catch (IOException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		return properties;
+	}
+
+	public static void WriteProperties(String filePath, String pKey,
+	        String pValue) throws IOException
+	{
+		Properties pps = new Properties();
+
+		InputStream in = new FileInputStream(filePath);
+		// 从输入流中读取属性列表（键和元素对）
+		pps.load(in);
+		// 调用 Hashtable 的方法 put。使用 getProperty 方法提供并行性。
+		// 强制要求为属性的键和值使用字符串。返回值是 Hashtable 调用 put 的结果。
+		OutputStream out = new FileOutputStream(filePath);
+		pps.setProperty(pKey, pValue);
+		// 以适合使用 load 方法加载到 Properties 表中的格式，
+		// 将此 Properties 表中的属性列表（键和元素对）写入输出流
+		pps.store(out, "Update " + pKey + " name");
 	}
 
 	public static void main(String[] args)
